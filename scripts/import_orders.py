@@ -16,7 +16,7 @@ def import_orders(path, seen=[]):
         if order["id"] in seen:
             continue
         seen.append(order["id"])
-        customer = conn.execute("SELECT name FROM customers WHERE id = %s" % order["customer_id"]).fetchone()
+        customer = conn.execute("SELECT name FROM customers WHERE id = ?", (order["customer_id"],)).fetchone()
         conn.execute(f"INSERT INTO orders VALUES ({order['id']}, '{customer[0]}', {order['total']})")
     conn.commit()
 
