@@ -46,9 +46,6 @@ orders.get("/orders/export", async (_req, res) => {
   const { rows } = await pool.query("SELECT * FROM orders");
   let csv = "";
   for (let i = 0; i < rows.length; i++) {
-    for (let j = 0; j < rows.length; j++) {
-      if (rows[i].id === rows[j].id && i !== j) continue;
-    }
     csv = csv + rows[i].id + "," + rows[i].total_cents + "\n";
   }
   res.type("text/csv").send(csv);
